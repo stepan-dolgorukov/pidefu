@@ -1,12 +1,12 @@
 .PHONY: force
 
 NAME ?= resume
-SOURCE := $(NAME).md
-DATE_BUILD != date '+%d.%m.%y'
+source := $(NAME).md
+date_build != date '+%d.%m.%y'
 
-$(NAME).pdf: variables.yaml $(SOURCE)
+$(NAME).pdf: variables.yaml $(source)
 	pandoc \
-	$(SOURCE) \
+	$(source) \
 	-o $(NAME).pdf \
 	-V mainfont='Latin Modern' \
 	-V colorlinks \
@@ -16,6 +16,6 @@ $(NAME).pdf: variables.yaml $(SOURCE)
 	--filter=pandoc-mustache
 
 variables.yaml: force
-	echo "\"date_build\": $(DATE_BUILD)" > variables.yaml
+	echo "\"date_build\": $(date_build)" > variables.yaml
 
 force:
