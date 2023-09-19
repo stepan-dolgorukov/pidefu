@@ -1,13 +1,15 @@
 .PHONY: force
 
 NAME ?= resume
-source := $(NAME).md
+
+name != echo ${NAME} | tr A-Z a-z | tr ' ' '-'
+source := ${name}.md
 date_build != date '+%d.%m.%y'
 
-$(NAME).pdf: variables.yaml $(source)
+$(name).pdf: variables.yaml $(source)
 	pandoc \
 	$(source) \
-	-o $(NAME).pdf \
+	-o $(name).pdf \
 	-V mainfont='Latin Modern' \
 	-V colorlinks \
 	-V urlcolor=NavyBlue \
