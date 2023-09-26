@@ -9,11 +9,11 @@ date_build != date '+%d.%m.%y'
 $(name).pdf: variables.yaml $(source)
 	pandoc \
 	$(source) \
-	-o $(name).pdf \
-	-V mainfont='Latin Modern' \
-	-V colorlinks \
-	-V urlcolor=NavyBlue \
-	-V geometry:margin=1in \
+	--output=$(name).pdf \
+	--variable=mainfont:'Latin Modern' \
+	--variable=colorlinks \
+	--variable=urlcolor:NavyBlue \
+	--variable=geometry:margin=1in \
 	--pdf-engine=pdflatex \
 	--filter=pandoc-mustache
 
