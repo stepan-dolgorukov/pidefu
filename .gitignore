@@ -1,3 +1,4 @@
 *.pdf
 *.md
 Pipfile.lock
+variables.yaml
