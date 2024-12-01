@@ -6,7 +6,5 @@ name = "pypi"
 [packages]
 pandoc-mustache = "*"
 
-[dev-packages]
-
 [requires]
 python_version = "3.11"
