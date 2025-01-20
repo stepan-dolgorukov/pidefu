@@ -9,9 +9,9 @@ WORKDIR /home/${name_user}
 
 ARG RESUME
 
-COPY ${RESUME}.md Makefile ./
+COPY ${RESUME} Makefile ./
 
-RUN chown ${name_user}:${name_user} Makefile ${RESUME}.md
+RUN chown ${name_user}:${name_user} Makefile ${RESUME}
 
 USER ${name_user}
 
@@ -19,8 +19,8 @@ RUN pipenv install pandoc-mustache && \
 mktextfm larm1200 && \
 mktextfm larm1440 && \
 mktextfm larm1728 && \
-chmod 400 Makefile ${RESUME}.md
+chmod 400 Makefile ${RESUME}
 
 ENV RESUME=${RESUME}
 
-ENTRYPOINT [ "pipenv", "run", "make", "resume=${RESUME}" ]
+ENTRYPOINT [ "pipenv", "run", "make", "resume=$(cut -d/ -f1 <<< ${RESUME})" ]
