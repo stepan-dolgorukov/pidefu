@@ -9,6 +9,8 @@ mustache: variables.yaml
 ---
 # Name Surname
 
+The resume is built on {{date_build}}.
+
 ...
 
 ## Professional experience
