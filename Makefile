@@ -9,8 +9,10 @@ ${target}: variables.yaml ${source}
 	pandoc \
 	${source} \
 	--output=${target} \
+	--variable=papersize:A4 \
 	--variable=mainfont:'Latin Modern' \
 	--variable=colorlinks \
+	--variable=linkstyle:bold \
 	--variable=urlcolor:NavyBlue \
 	--variable=geometry:margin=1in \
 	--pdf-engine=pdflatex \
