@@ -4,6 +4,7 @@ source := ${resume}
 target != basename -s.md ${resume}
 target := $(addsuffix .pdf, ${target})
 date_build != date '+%d.%m.%y'
+variables_storage := ./variables.yaml
 
 ${target}: variables.yaml ${source}
 	pandoc \
@@ -18,7 +19,7 @@ ${target}: variables.yaml ${source}
 	--pdf-engine=pdflatex \
 	--filter=pandoc-mustache
 
-variables.yaml: force
-	echo "\"date_build\": ${date_build}" > variables.yaml
+${variables_storage}: force
+	echo "\"date_build\": ${date_build}" >${variables_storage}
 
 force:
