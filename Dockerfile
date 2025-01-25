@@ -23,4 +23,4 @@ chmod 400 Makefile ${RESUME}
 
 ENV RESUME=${RESUME}
 
-ENTRYPOINT [ "pipenv", "run", "make", "resume=$(cut -d/ -f1 <<< ${RESUME})" ]
+ENTRYPOINT [ "pipenv", "run", "make", "resume=${RESUME}" ]
