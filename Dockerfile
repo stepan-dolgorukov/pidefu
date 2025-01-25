@@ -11,7 +11,7 @@ ARG RESUME
 
 COPY ${RESUME} Makefile ./
 
-RUN chown ${name_user}:${name_user} Makefile ${RESUME}
+RUN touch ./{Pipfile,variables.yaml} && chown ${name_user}:${name_user} ${RESUME} ./{Makefile,Pipfile,variables.yaml}
 
 USER ${name_user}
 
