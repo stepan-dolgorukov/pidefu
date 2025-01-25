@@ -2,7 +2,7 @@ FROM archlinux:latest
 
 ENV name_user='cook-resume'
 
-RUN pacman --sync --refresh --sysupgrade --noconfirm make texlive texlive-langcyrillic python python-pipenv pandoc-cli && \
+RUN pacman --sync --refresh --sysupgrade --noconfirm make texlive texlive-langcyrillic python python-pipenv pandoc-cli ttf-liberation && \
 useradd ${name_user} --create-home
 
 WORKDIR /home/${name_user}
