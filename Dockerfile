@@ -15,7 +15,7 @@ RUN touch ./{Pipfile,variables.yaml} && chown ${name_user}:${name_user} ${RESUME
 
 USER ${name_user}
 
-RUN pipenv install pandoc-mustache && \
+RUN pipenv install --python=/usr/bin/python3 pandoc-mustache && \
 mktextfm larm1200 && \
 mktextfm larm1440 && \
 mktextfm larm1728 && \
