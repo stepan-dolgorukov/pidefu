@@ -16,7 +16,7 @@ ${target}: variables.yaml ${source}
 	--variable=linkstyle:bold \
 	--variable=urlcolor:NavyBlue \
 	--variable=geometry:margin=1in \
-	--pdf-engine=pdflatex \
+	--pdf-engine=xelatex \
 	--filter=pandoc-mustache
 
 ${variables_storage}: force
