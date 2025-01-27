@@ -1,3 +1,6 @@
+[pipenv]
+allow_prereleases = false
+
 [[source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
