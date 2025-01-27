@@ -13,6 +13,7 @@ ${target}: variables.yaml ${source}
 	--variable=papersize:A4 \
 	--variable=mainfont:'LiberationSans-Regular.ttf' \
 	--variable=mainfontoptions:BoldFont='LiberationSans-Bold.ttf' \
+	--variable=mainfontoptions:ItalicFont='LiberationSans-Italic.ttf' \
 	--variable=colorlinks \
 	--variable=linkstyle:bold \
 	--variable=urlcolor:NavyBlue \
