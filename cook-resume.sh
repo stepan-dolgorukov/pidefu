@@ -5,6 +5,11 @@ if [ ! -f "${1}" ]; then
   exit 0
 fi
 
+if [ "$(file --brief "${1}")" != 'ASCII text' ]; then
+  echo "Unsupported file format."
+  exit 0
+fi
+
 resume="$(echo "${1}" | rev | cut --delimiter='/' --fields=1 | rev)"
 
 docker build --tag cook-resume --build-arg RESUME="${resume}" "$(pwd)/"
