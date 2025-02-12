@@ -18,7 +18,12 @@ if [ "$(docker container ls --all --quiet --filter 'name=cook-resume' | wc --lin
   docker rm cook-resume
 fi
 
-resume=$(basename --suffix='.md' "${resume}").pdf
+resume="$(basename --suffix='.markdown' "${resume}")"
+resume="$(basename --suffix='.mdown' "${resume}")"
+resume="$(basename --suffix='.mkdn' "${resume}")"
+resume="$(basename --suffix='.mkd' "${resume}")"
+resume="$(basename --suffix='.mdwn' "${resume}")"
+resume="$(basename --suffix='.md' "${resume}")".pdf
 
 docker run --name=cook-resume --interactive --tty cook-resume && \
 docker cp "cook-resume:/home/cook-resume/${resume}" "./"

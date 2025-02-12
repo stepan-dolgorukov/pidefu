@@ -1,7 +1,13 @@
 .PHONY: force
 
 source := ${resume}
-target != basename -s.md ${resume}
+target != basename -s.markdown ${resume}
+target != basename -s.mdown ${target}
+target != basename -s.mkdn ${target}
+target != basename -s.mkd ${target}
+target != basename -s.mdwn ${target}
+target != basename -s.md ${target}
+
 target := $(addsuffix .pdf, ${target})
 date_build != date '+%d.%m.%y'
 variables_storage := ./variables.yaml
