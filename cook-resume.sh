@@ -5,7 +5,9 @@ if [ ! -f "${1}" ]; then
   exit 0
 fi
 
-if [ "$(file --brief "${1}")" != 'ASCII text' ]; then
+type_file="$(file --brief "${1}")"
+
+if [ "${type_file}" != 'ASCII text' ] && [ "${type_file}" != 'Unicode text, UTF-8 text' ]; then
   echo "Unsupported file format."
   exit 0
 fi
