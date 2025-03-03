@@ -16,6 +16,13 @@ resume="$(echo "${1}" | rev | cut --delimiter='/' --fields=1 | rev)"
 
 docker build --tag cook-resume --build-arg RESUME="${resume}" "$(pwd)/"
 
+exit_code="${?}"
+
+if [ "${exit_code}" != 0 ]; then
+  echo "Unsuccessfull image build."
+  exit "${exit_code}"
+fi
+
 if [ "$(docker container ls --all --quiet --filter 'name=cook-resume' | wc --lines)" -ge 1 ]; then
   docker rm cook-resume
 fi
