@@ -1,12 +1,17 @@
 #!/usr/bin/env sh
 
 if [ "${#}" -lt 1 ]; then
-  echo "File wasn't specified."
+  echo "A name of file wasn't specified."
+  exit 0
+fi
+
+if [ ! -e "${1}" ]; then
+  echo "A file with specified name doesn't exist."
   exit 0
 fi
 
 if [ ! -f "${1}" ]; then
-  echo "Specified file doesn't exist."
+  echo "Specified file isn't regular."
   exit 0
 fi
 
