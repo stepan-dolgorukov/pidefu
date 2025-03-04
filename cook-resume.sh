@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+if [ "${#}" -lt 1 ]; then
+  echo "File wasn't specified."
+  exit 0
+fi
+
 if [ ! -f "${1}" ]; then
   echo "Specified file doesn't exist."
   exit 0
@@ -36,3 +41,4 @@ resume="$(basename --suffix='.md' "${resume}")".pdf
 
 docker run --name=cook-resume --interactive --tty cook-resume && \
 docker cp "cook-resume:/home/cook-resume/${resume}" "./"
+
