@@ -44,7 +44,7 @@ resume="$(basename --suffix='.mkd' "${resume}")"
 resume="$(basename --suffix='.mdwn' "${resume}")"
 resume="$(basename --suffix='.md' "${resume}")".pdf
 
-docker run --name=cook-resume --interactive --tty cook-resume && \
+docker run --name=cook-resume --interactive --tty cook-resume
 
 exit_code="${?}"
 
@@ -54,4 +54,11 @@ if [ "${exit_code}" -ne 0 ]; then
 fi
 
 docker cp "cook-resume:/home/cook-resume/${resume}" "./"
+
+exit_code="${?}"
+
+if [ "${exit_code}" -ne 0 ]; then
+  echo "Unsuccessfull copying of a file."
+  exit "${exit_code}"
+fi
 
