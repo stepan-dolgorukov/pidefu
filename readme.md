@@ -1,6 +1,6 @@
 # cook-resume
 
-Create PDF resume from source in Markdown.
+Cook PDF resume from source text in Markdown.
 
 ```shell
 chmod u+x cook-resume.sh
