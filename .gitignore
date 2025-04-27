@@ -1,4 +1,9 @@
 *.pdf
 *.md
+*.markdown
+*.mdown
+*.mkdn
+*.mkd
+*.mdwn
 Pipfile.lock
 variables.yaml
