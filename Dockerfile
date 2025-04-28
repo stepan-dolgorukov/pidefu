@@ -2,8 +2,9 @@ FROM archlinux:latest@sha256:ce4dddea70099cc8360478d162e478997420185683ce9de8822
 
 ENV name_user='cook-resume'
 
-RUN pacman --sync --refresh --sysupgrade --noconfirm make texlive texlive-langcyrillic python python-pipenv pandoc-cli ttf-liberation && \
-useradd ${name_user} --create-home
+RUN pacman --sync --refresh --sysupgrade --noconfirm make texlive \
+    texlive-langcyrillic python python-pipenv pandoc-cli ttf-liberation && \
+    useradd ${name_user} --create-home
 
 WORKDIR /home/${name_user}
 
