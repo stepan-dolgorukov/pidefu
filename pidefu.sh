@@ -25,8 +25,18 @@ fi
 mkdir --verbose --parents ./build
 exit_code="${?}"
 
+if [ "${exit_code}" != 0 ]; then
+  echo "Fail to create catalog."
+  exit 1
+fi
+
 cp --verbose "${1}" ./build
 exit_code="${?}"
+
+if [ "${exit_code}" != 0 ]; then
+  echo "Fail to create catalog."
+  exit 1
+fi
 
 docker build --tag pidefu "$(pwd)/"
 exit_code="${?}"
@@ -43,3 +53,8 @@ docker run \
   pidefu
 
 exit_code="${?}"
+
+if [ "${exit_code}" -ne 0 ]; then
+  echo "Fail to run container."
+  exit "${exit_code}"
+fi
