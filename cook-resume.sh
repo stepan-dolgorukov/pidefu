@@ -22,10 +22,13 @@ if [ "${type_file}" != 'ASCII text' ] && [ "${type_file}" != 'Unicode text, UTF-
   exit 0
 fi
 
-resume="$(echo "${1}" | rev | cut --delimiter='/' --fields=1 | rev)"
+mkdir --verbose --parents ./build
+exit_code="${?}"
 
-docker build --tag cook-resume --build-arg RESUME="${resume}" "$(pwd)/"
+cp --verbose "${1}" ./build
+exit_code="${?}"
 
+docker build --tag pidefu "$(pwd)/"
 exit_code="${?}"
 
 if [ "${exit_code}" != 0 ]; then
@@ -33,32 +36,10 @@ if [ "${exit_code}" != 0 ]; then
   exit "${exit_code}"
 fi
 
-if [ "$(docker container ls --all --quiet --filter 'name=cook-resume' | wc --lines)" -ge 1 ]; then
-  docker rm cook-resume
-fi
-
-resume="$(basename --suffix='.markdown' "${resume}")"
-resume="$(basename --suffix='.mdown' "${resume}")"
-resume="$(basename --suffix='.mkdn' "${resume}")"
-resume="$(basename --suffix='.mkd' "${resume}")"
-resume="$(basename --suffix='.mdwn' "${resume}")"
-resume="$(basename --suffix='.md' "${resume}")".pdf
-
-docker run --name=cook-resume --interactive --tty cook-resume
+docker run \
+  --interactive=true \
+  --tty=true \
+  --volume ./build:/home/buildon/build \
+  pidefu
 
 exit_code="${?}"
-
-if [ "${exit_code}" -ne 0 ]; then
-  echo "Unsuccessfull run of a container."
-  exit "${exit_code}"
-fi
-
-docker cp "cook-resume:/home/cook-resume/${resume}" "./"
-
-exit_code="${?}"
-
-if [ "${exit_code}" -ne 0 ]; then
-  echo "Unsuccessfull copying of a file."
-  exit "${exit_code}"
-fi
-
