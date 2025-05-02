@@ -26,7 +26,7 @@ rm --verbose --recursive --force ./.transfer/
 mkdir --verbose --parents ./.transfer/
 exit_code="${?}"
 
-if [ "${exit_code}" != 0 ]; then
+if [ "${exit_code}" -ne 0 ]; then
   echo "Fail to create catalog."
   exit 1
 fi
@@ -34,7 +34,7 @@ fi
 cp --verbose "${1}" ./.transfer/
 exit_code="${?}"
 
-if [ "${exit_code}" != 0 ]; then
+if [ "${exit_code}" -ne 0 ]; then
   echo "Fail to create catalog."
   exit 1
 fi
@@ -42,7 +42,7 @@ fi
 docker build --tag pidefu "$(pwd)/"
 exit_code="${?}"
 
-if [ "${exit_code}" != 0 ]; then
+if [ "${exit_code}" -ne 0 ]; then
   echo "Unsuccessfull image build."
   exit "${exit_code}"
 fi
