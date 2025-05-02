@@ -22,7 +22,8 @@ if [ "${type_file}" != 'ASCII text' ] && [ "${type_file}" != 'Unicode text, UTF-
   exit 0
 fi
 
-mkdir --verbose --parents ./.build/
+rm --verbose --recursive --force ./.transfer/
+mkdir --verbose --parents ./.transfer/
 exit_code="${?}"
 
 if [ "${exit_code}" != 0 ]; then
@@ -30,7 +31,7 @@ if [ "${exit_code}" != 0 ]; then
   exit 1
 fi
 
-cp --verbose "${1}" ./.build/
+cp --verbose "${1}" ./.transfer/
 exit_code="${?}"
 
 if [ "${exit_code}" != 0 ]; then
@@ -49,7 +50,7 @@ fi
 docker run \
   --interactive=true \
   --tty=true \
-  --volume ./.build:/home/buildon/build \
+  --volume ./.transfer/:/home/buildon/.transfer/ \
   pidefu
 
 exit_code="${?}"

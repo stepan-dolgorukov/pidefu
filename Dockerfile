@@ -24,5 +24,5 @@ CMD for file_markdown in $(find . -iname '*md'); do \
     done; \
     test "${?}" -ne 0 && exit 1 || \
     for file_pdf in $(find . -iname '*.pdf'); do \
-        mv --force ${file_pdf} ./build; \
+        mv --force ${file_pdf} ./.transfer; \
     done
