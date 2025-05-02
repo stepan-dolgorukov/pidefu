@@ -1,8 +1,8 @@
-# cook-resume
+# Pidefu
 
-Cook PDF resume from source text in Markdown.
+Build PDF in isolation from source file in Markdown.
 
 ```shell
-chmod u+x cook-resume.sh
-./cook-resume.sh name-surname.md
+chmod u+x pidefu.sh
+./pidefu.sh path
 ```
