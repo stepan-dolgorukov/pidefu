@@ -22,16 +22,15 @@ if [ "${type_file}" != 'ASCII text' ] && [ "${type_file}" != 'Unicode text, UTF-
   exit 0
 fi
 
-rm --verbose --recursive --force ./.transfer/
-mkdir --verbose --parents ./.transfer/
+catalog_transfer="$(mktemp --directory -p ./ -t .transfer.XXXXXXXX)"
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
-  echo "Fail to create catalog."
+  echo "Fail to create transfer catalog."
   exit 1
 fi
 
-cp --verbose "${1}" ./.transfer/
+cp --verbose "${1}" "${catalog_transfer}"
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
@@ -50,7 +49,7 @@ fi
 docker run \
   --interactive=true \
   --tty=true \
-  --volume ./.transfer/:/home/buildon/.transfer/ \
+  --volume "${catalog_transfer}":/home/buildon/.transfer/ \
   pidefu
 
 exit_code="${?}"
