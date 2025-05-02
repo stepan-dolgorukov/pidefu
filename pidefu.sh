@@ -43,6 +43,7 @@ exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
   echo "Unsuccessfull image build."
+  rm --recursive --force "${catalog_transfer}"
   exit "${exit_code}"
 fi
 
@@ -56,5 +57,6 @@ exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
   echo "Fail to run container."
+  rm --recursive --force "${catalog_transfer}"
   exit "${exit_code}"
 fi
