@@ -34,7 +34,7 @@ cp --verbose "${1}" "${catalog_transfer}"
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
-  echo "Fail to create catalog."
+  echo "Fail to copy file to the catalog."
   exit 1
 fi
 
