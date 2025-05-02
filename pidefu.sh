@@ -18,7 +18,7 @@ fi
 type_file="$(file --brief "${1}")"
 
 if [ "${type_file}" != 'ASCII text' ] && [ "${type_file}" != 'Unicode text, UTF-8 text' ]; then
-  echo "Unsupported file format."
+  echo "A content of the file isn't in Markdown language."
   exit 0
 fi
 
