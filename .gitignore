@@ -7,3 +7,4 @@
 *.mdwn
 Pipfile.lock
 variables.yaml
+build/
