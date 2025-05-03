@@ -19,7 +19,12 @@ RUN pipenv install --python=/usr/bin/python3 pandoc-mustache && \
     mktextfm larm1728 && \
     chmod 400 Makefile ${RESUME}
 
-CMD for file_markdown in $(find . -iname '*md'); do \
+CMD for file_markdown in $(find . -iname '*.md' -o \
+                                  -iname '*.mdwn' -o \
+                                  -iname '*.mkd' -o \
+                                  -iname '*.mkdn' -o \
+                                  -iname '*.mdown' -o \
+                                  -iname '*.markdown' ); do \
         pipenv run make resume=${file_markdown}; \
     done; \
     test "${?}" -ne 0 && exit 1 || \
