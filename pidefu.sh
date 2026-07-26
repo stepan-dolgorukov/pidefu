@@ -22,19 +22,30 @@ if [ "${type_file}" != 'ASCII text' ] && [ "${type_file}" != 'Unicode text, UTF-
   exit 0
 fi
 
-catalog_transfer="$(mktemp --directory -p ./ -t .transfer.XXXXXXXX)"
+catalog_result='./result'
+
+rm --recursive --force "${catalog_result}"
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
-  echo "Fail to create transfer catalog."
+  echo "Fail to remove existing result catalog."
   exit 1
 fi
 
-cp --verbose "${1}" "${catalog_transfer}"
+mkdir "${catalog_result}"
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
-  echo "Fail to copy file to the catalog."
+  echo "Fail to create result catalog."
+  exit 1
+fi
+
+path_source="$(realpath "${1}")"
+exit_code="${?}"
+
+if [ "${exit_code}" -ne 0 ]; then
+  echo "Fail to resolve a path to the file."
+  rm --recursive --force "${catalog_result}"
   exit 1
 fi
 
@@ -43,20 +54,21 @@ exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
   echo "Unsuccessfull image build."
-  rm --recursive --force "${catalog_transfer}"
+  rm --recursive --force "${catalog_result}"
   exit "${exit_code}"
 fi
 
 docker run \
   --interactive=true \
   --tty=true \
-  --volume "${catalog_transfer}":/home/buildon/.transfer/ \
+  --volume "${path_source}":/home/buildon/"$(basename "${1}")":ro \
+  --volume "${catalog_result}":/home/buildon/.transfer/ \
   pidefu
 
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
   echo "Fail to run container."
-  rm --recursive --force "${catalog_transfer}"
+  rm --recursive --force "${catalog_result}"
   exit "${exit_code}"
 fi
