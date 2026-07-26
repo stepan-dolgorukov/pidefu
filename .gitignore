@@ -5,6 +5,5 @@
 *.mkdn
 *.mkd
 *.mdwn
-Pipfile.lock
 variables.yaml
 build/

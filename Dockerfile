@@ -8,16 +8,16 @@ RUN pacman --sync --refresh --sysupgrade --noconfirm make texlive \
 
 WORKDIR /home/${name_user}
 
-COPY Makefile ./
+COPY Makefile Pipfile Pipfile.lock ./
 
-RUN touch ./{Pipfile,variables.yaml} && \
-    chown ${name_user}:${name_user} ./{${RESUME},Makefile,Pipfile,variables.yaml}
+RUN touch ./variables.yaml && \
+    chown ${name_user}:${name_user} ./{Makefile,Pipfile,Pipfile.lock,variables.yaml}
 
-RUN pipenv install --python=/usr/bin/python3 pandoc-mustache && \
+RUN pipenv sync --python=/usr/bin/python3 && \
     mktextfm larm1200 && \
     mktextfm larm1440 && \
     mktextfm larm1728 && \
-    chmod 400 Makefile ${RESUME}
+    chmod 400 Makefile
 
 CMD for file_markdown in $(find . -iname '*.md' -o \
                                   -iname '*.mdwn' -o \
