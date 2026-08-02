@@ -61,6 +61,7 @@ fi
 docker run \
   --interactive=true \
   --tty=true \
+  --rm=true \
   --volume "${path_source}":/home/buildon/"$(basename "${1}")":ro \
   --volume "${catalog_result}":/home/buildon/.transfer/ \
   pidefu
