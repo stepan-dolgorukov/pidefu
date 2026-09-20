@@ -22,41 +22,47 @@ if [ "${type_file}" != 'ASCII text' ] && [ "${type_file}" != 'Unicode text, UTF-
   exit 0
 fi
 
-catalog_transfer="$(mktemp --directory -p ./ -t .transfer.XXXXXXXX)"
+catalog_root="$(dirname "${0}")"
+
+catalog_build="$(mktemp --directory -t pidefu.XXXXXXXX)"
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
-  echo "Fail to create transfer catalog."
+  echo "Fail to create build catalog."
   exit 1
 fi
 
-cp --verbose "${1}" "${catalog_transfer}"
+cp --verbose "${1}" "${catalog_build}"
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
   echo "Fail to copy file to the catalog."
+  rm --recursive --force "${catalog_build}"
   exit 1
 fi
 
-docker build --tag pidefu "$(pwd)/"
+make \
+  --directory="${catalog_build}" \
+  --file="$(realpath "${catalog_root}/Makefile")" \
+  resume="$(basename "${1}")"
+
 exit_code="${?}"
 
 if [ "${exit_code}" -ne 0 ]; then
-  echo "Unsuccessfull image build."
-  rm --recursive --force "${catalog_transfer}"
+  echo "Fail to build the document."
+  rm --recursive --force "${catalog_build}"
   exit "${exit_code}"
 fi
 
-docker run \
-  --interactive=true \
-  --tty=true \
-  --volume "${catalog_transfer}":/home/buildon/.transfer/ \
-  pidefu
+for file_pdf in "${catalog_build}"/*.pdf; do
+  mv --verbose --force "${file_pdf}" ./
+done
 
 exit_code="${?}"
 
+rm --recursive --force "${catalog_build}"
+
 if [ "${exit_code}" -ne 0 ]; then
-  echo "Fail to run container."
-  rm --recursive --force "${catalog_transfer}"
+  echo "Fail to move built documents."
   exit "${exit_code}"
 fi
